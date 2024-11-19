@@ -1,30 +1,30 @@
-import { DataTypes, Model } from '@sequelize/core';
+import { DataTypes } from '@sequelize/core';
 import { sequelize } from '../database.js';
 
-export class User extends Model { }
-
-export function initUser() {
-    User.init({
-        id: {
-            type: DataTypes.INTEGER,
-            primaryKey: true,
-            autoIncrement: true
-        },
-        userName: {
-            type: DataTypes.STRING,
-            allowNull: false
-        },
-        password: {
-            type: DataTypes.STRING,
-            allowNull: false
-        },
-        registeredAt: {
-            type: DataTypes.DATE,
-            allowNull: false,
-            defaultValue: DataTypes.NOW
+export const User = sequelize.define('User', {
+    id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true
+    },
+    name: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: true,
+        validate: {
+            notEmpty: true,
+            len: [5, 50]
         }
-    }, {
-        sequelize,
-        modelName: 'User'
-    });
-}
+    },
+    password: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+            notEmpty: true,
+            len: [8, 99],
+            is: /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$/
+        }
+    }
+}, {
+    timestamps: true
+});

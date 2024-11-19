@@ -1,13 +1,18 @@
 import { Sequelize } from '@sequelize/core';
 import { SqliteDialect } from '@sequelize/sqlite3';
+import { join, dirname } from 'path';
+import { fileURLToPath } from 'url';
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 export const sequelize = new Sequelize({
     dialect: SqliteDialect,
-    storage: '../database.sqlite',
-    pool: { idleTimeoutMillis: Infinity }
+    storage: join(__dirname, '..', 'database.sqlite'),
+    logging: console.log,
+    logQueryParameters: true,
 });
 
-export const testConnection = async () => {
+const testConnection = async () => {
     try {
         await sequelize.authenticate();
         console.log('Connection to DB succesfully established.');
@@ -17,3 +22,5 @@ export const testConnection = async () => {
         console.error('Error while connecting to DB:', error);
     }
 };
+
+testConnection();
