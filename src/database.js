@@ -7,9 +7,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 
 export const sequelize = new Sequelize({
     dialect: SqliteDialect,
-    storage: join(__dirname, '..', 'database.sqlite'),
-    logging: console.log,
-    logQueryParameters: true,
+    storage: join(__dirname, '..', 'database.sqlite')
 });
 
 const testConnection = async () => {

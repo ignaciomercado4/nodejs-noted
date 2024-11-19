@@ -1,0 +1,24 @@
+<h1>Registration form</h1>
+
+{{#if errors}}
+  {{#each errors as |error|}}
+    <p style="color: red;">
+      {{error}}
+    </p>
+  {{/each}}
+{{/if}}
+
+<form action="/register" method="POST">
+
+  <label for="name">Pick a username (at least 5 chars.):</label>
+  <input type="text" name="name" placeholder="Nachopro44" />
+
+  <br />
+  <label for="password">Pick a password (Minimum eight characters, at least one
+    upper case English letter, one lower case English letter, one number and one
+    special character):</label>
+  <input type="text" name="password" placeholder="..." />
+
+  <br />
+  <button type="submit">Register</button>
+</form>

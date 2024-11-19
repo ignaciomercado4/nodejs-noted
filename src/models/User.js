@@ -13,6 +13,7 @@ export const User = sequelize.define('User', {
         unique: true,
         validate: {
             notEmpty: true,
+            is: /^[a-z0-9_-]{3,50}$/,
             len: [5, 50]
         }
     },

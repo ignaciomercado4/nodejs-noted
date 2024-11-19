@@ -1,6 +1,8 @@
 //Imports
 import express from 'express';
-import testRoutes from './routes/miscRoutes.js';
+import bodyParser from 'body-parser';
+import miscRoutes from './routes/miscRoutes.js';
+import userRoutes from './routes/userRoutes.js';
 import { engine } from 'express-handlebars';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
@@ -24,8 +26,12 @@ app.engine('.hbs', engine({
 
 app.set('view engine', '.hbs');
 
+//Configures req.body parser
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 //Routes setup
-app.use(testRoutes);
+app.use(miscRoutes, userRoutes);
 
 //DB sync
 const initDB = async () => {
