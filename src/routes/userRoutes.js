@@ -6,6 +6,7 @@ import express from 'express';
 import { User } from '../models/User.js';
 import { validateRegistrationFormPassword, validateRegistrationFormName } from '../../public/js/validations.js';
 import { isAuthenticated } from '../../public/js/auth.js';
+import session from 'express-session';
 
 const router = express.Router();
 
@@ -57,6 +58,8 @@ router.post('/register', async (req, res) => {
     }
 });
 
+
+//Log in
 router.get('/login', (req, res) => {
     try {
         res.render('partials/login');
@@ -65,33 +68,41 @@ router.get('/login', (req, res) => {
     }
 });
 
-router.post('/login', async (req, res) => {
+router.post('/verifyLogin', async (req, res) => {
     try {
         const { name, password } = req.body;
+        let errors = [];
 
-        const user = await User.findAll({
-            where: {
-                name: name
-            }
+        const user = await User.findOne({
+            where: { name: name }
         });
 
-        if (!user ||
-            password != user.password) {
-            res.render('partials/login', {
-                error: "Login credentials incorrect."
-            })
+        if (password != user.password || !user) {
+            errors.push('User not found, please verify your credentials');
         } else {
             req.session.isAuthenticated = true;
             req.session.user = {
                 id: user.id,
-                name: name
+                name: user.name
             };
 
-            res.redirect('/');
+            res.redirect('/')
         }
 
     } catch (error) {
         console.log('Error in log in POST route:', error);
+    }
+});
+
+
+//Log out
+router.get('/logout', isAuthenticated, async (req, res) => {
+    try {
+        req.session.destroy((error) => {
+            console.log('Error while destroying session:', error);
+        });
+    } catch (error) {
+        console.log('Error while accessing log out route:', error);
     }
 });
 
