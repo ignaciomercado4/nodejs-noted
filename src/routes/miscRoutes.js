@@ -4,11 +4,16 @@ how to classify
 */
 
 import express from 'express';
+import { isAuthenticated } from '../../public/js/auth.js';
 
 const router = express.Router();
 
-router.get('/', (req, res) => {
-    res.render('partials/home');
+router.get('/', isAuthenticated, (req, res) => {
+    try {
+        res.render('partials/home');
+    } catch (error) {
+        console.log('Error while rendering home template:', error);
+    }
 });
 
 export default router;

@@ -1,6 +1,6 @@
 //Imports
 import express from 'express';
-import bodyParser from 'body-parser';
+import session from 'express-session';
 import miscRoutes from './routes/miscRoutes.js';
 import userRoutes from './routes/userRoutes.js';
 import { engine } from 'express-handlebars';
@@ -29,6 +29,15 @@ app.set('view engine', '.hbs');
 //Configures req.body parser
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(session({
+    secret: 'secret',
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+        secure: false,
+        maxAge: 1000 * 60 * 60 * 24
+    }
+}));
 
 //Routes setup
 app.use(miscRoutes, userRoutes);
