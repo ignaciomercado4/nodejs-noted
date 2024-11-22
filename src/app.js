@@ -3,6 +3,7 @@ import express from 'express';
 import session from 'express-session';
 import miscRoutes from './routes/miscRoutes.js';
 import userRoutes from './routes/userRoutes.js';
+import noteRoutes from './routes/noteRoutes.js';
 import { engine } from 'express-handlebars';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
@@ -40,7 +41,7 @@ app.use(session({
 }));
 
 //Routes setup
-app.use(miscRoutes, userRoutes);
+app.use(miscRoutes, userRoutes, noteRoutes);
 
 //DB sync
 const initDB = async () => {

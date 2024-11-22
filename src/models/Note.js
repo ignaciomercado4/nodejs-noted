@@ -2,19 +2,20 @@ import { DataTypes } from '@sequelize/core';
 import { sequelize } from '../database.js';
 import { User } from './User.js';
 
-const Note = sequelize.define('Note', {
+export const Note = sequelize.define('Note', {
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
+        allowNull: false
+    },
+    userId: {
+        type: DataTypes.INTEGER,
         allowNull: false,
         references: {
             model: User,
             key: 'id',
         }
-    },
-    userId: {
-        type: DataTypes.INTEGER,
     },
     title: {
         type: DataTypes.TEXT,
@@ -30,4 +31,6 @@ const Note = sequelize.define('Note', {
             len: [1, 500]
         }
     },
+}, {
+    timestamps: true
 });
