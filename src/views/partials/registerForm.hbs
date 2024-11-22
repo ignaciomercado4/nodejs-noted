@@ -1,24 +1,58 @@
-<h1>Registration form</h1>
+<div class="bg-white p-8">
+  <div class="max-w-2xl mx-auto">
+    <h1
+      class="text-6xl font-mono font-bold mb-8 border-b-8 border-black pb-4"
+    >REGISTER.</h1>
 
-{{#if errors}}
-  {{#each errors as |error|}}
-    <p style="color: red;">
-      {{error}}
-    </p>
-  {{/each}}
-{{/if}}
+    {{#if errors}}
+      <div class="border-4 border-black bg-red-100 p-4 mb-8">
+        {{#each errors as |error|}}
+          <p class="font-mono text-xl text-black mb-2">
+            →
+            {{error}}
+          </p>
+        {{/each}}
+      </div>
+    {{/if}}
 
-<form action="/register" method="POST">
+    <form action="/register" method="POST" class="border-8 border-black p-8">
+      <div class="mb-8">
+        <label for="name" class="block font-mono text-xl mb-2">
+          USERNAME (5+ CHARS)
+        </label>
+        <input
+          type="text"
+          name="name"
+          placeholder="NACHOPRO44"
+          class="w-full border-4 border-black p-4 font-mono text-xl focus:outline-none focus:ring-4 focus:ring-black placeholder-gray-400"
+        />
+      </div>
 
-  <label for="name">Pick a username (at least 5 chars.):</label>
-  <input type="text" name="name" placeholder="Nachopro44" />
+      <div class="mb-8">
+        <label for="password" class="block font-mono text-xl mb-2">
+          PASSWORD REQUIREMENTS:
+        </label>
+        <ul class="font-mono mb-2 space-y-1">
+          <li>→ MIN 8 CHARS</li>
+          <li>→ 1 UPPERCASE</li>
+          <li>→ 1 LOWERCASE</li>
+          <li>→ 1 NUMBER</li>
+          <li>→ 1 SPECIAL CHAR</li>
+        </ul>
+        <input
+          type="password"
+          name="password"
+          placeholder="••••••••"
+          class="w-full border-4 border-black p-4 font-mono text-xl focus:outline-none focus:ring-4 focus:ring-black placeholder-gray-400"
+        />
+      </div>
 
-  <br />
-  <label for="password">Pick a password (Minimum eight characters, at least one
-    upper case English letter, one lower case English letter, one number and one
-    special character):</label>
-  <input type="text" name="password" placeholder="..." />
-
-  <br />
-  <button type="submit">Register</button>
-</form>
+      <button
+        type="submit"
+        class="w-full bg-black text-white font-mono text-2xl p-4 border-4 border-black hover:bg-white hover:text-black transition-colors"
+      >
+        CREATE ACCOUNT →
+      </button>
+    </form>
+  </div>
+</div>

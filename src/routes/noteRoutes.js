@@ -30,13 +30,18 @@ router.post('/create', isAuthenticated, async (req, res) => {
     try {
         const { title, body } = req.body;
 
-        await Note.create({
-            title: title,
-            body: body,
-            userId: req.session.user.id
-        });
+        if (title && body) {
+            await Note.create({
+                title: title,
+                body: body,
+                userId: req.session.user.id
+            });
 
+            res.redirect('/notes');
+        } else {
 
+            res.redirect('/create');
+        }
     } catch (error) {
         console.log('Error while creating a note: ', error);
     }

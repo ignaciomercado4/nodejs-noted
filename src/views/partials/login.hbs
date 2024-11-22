@@ -1,20 +1,52 @@
-<h1>Login form</h1>
+<div class="bg-white p-8">
+  <div class="max-w-2xl mx-auto">
+    <h1
+      class="text-6xl font-mono font-bold mb-8 border-b-8 border-black pb-4"
+    >LOG IN.</h1>
 
-{{#if error}}
-  <p style="color: red;">
-    {{error}}
-  </p>
-{{/if}}
+    {{#if error}}
+      <div class="border-4 border-black bg-red-100 p-4 mb-8">
+        <p class="font-mono text-xl text-black mb-2">
+          →
+          {{error}}
+        </p>
+      </div>
+    {{/if}}
 
-<form action="/verifyLogin" method="POST">
+    <form action="/register" method="POST" class="border-8 border-black p-8">
+      <div class="mb-8">
+        <label for="name" class="block font-mono text-xl mb-2">
+          USERNAME (5+ CHARS)
+        </label>
+        <input
+          type="text"
+          name="name"
+          placeholder="NACHOPRO44"
+          class="w-full border-4 border-black p-4 font-mono text-xl focus:outline-none focus:ring-4 focus:ring-black placeholder-gray-400"
+        />
+      </div>
 
-  <label for="name">Type your username:</label>
-  <input type="text" name="name" placeholder="..." />
+      <div class="mb-8">
+        <label for="password" class="block font-mono text-xl mb-2">
+          PASSWORD REQUIREMENTS:
+        </label>
+        <p class="font-mono mb-2 space-y-1">
+          FILL IN THE DATA YOU OR WHATEVER.
+        </p>
+        <input
+          type="password"
+          name="password"
+          placeholder="••••••••"
+          class="w-full border-4 border-black p-4 font-mono text-xl focus:outline-none focus:ring-4 focus:ring-black placeholder-gray-400"
+        />
+      </div>
 
-  <br />
-  <label for="password">Type your password:</label>
-  <input type="text" name="password" placeholder="..." />
-
-  <br />
-  <button type="submit">Log in</button>
-</form>
+      <button
+        type="submit"
+        class="w-full bg-black text-white font-mono text-2xl p-4 border-4 border-black hover:bg-white hover:text-black transition-colors"
+      >
+        CREATE ACCOUNT →
+      </button>
+    </form>
+  </div>
+</div>
