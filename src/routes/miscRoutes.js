@@ -8,7 +8,7 @@ import { isAuthenticated } from '../../public/js/auth.js';
 
 const router = express.Router();
 
-router.get('/', isAuthenticated, (req, res) => {
+router.get('/', (req, res) => {
     try {
         res.render('partials/home');
     } catch (error) {

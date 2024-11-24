@@ -46,7 +46,7 @@ router.post('/register', async (req, res) => {
                 name: name
             };
 
-            res.redirect('/');
+            res.redirect('/notes');
         } else {
             res.render('partials/registerForm', {
                 errors: errors
@@ -86,7 +86,7 @@ router.post('/verifyLogin', async (req, res) => {
                 name: user.name
             };
 
-            res.redirect('/')
+            res.redirect('/notes')
         }
 
     } catch (error) {
