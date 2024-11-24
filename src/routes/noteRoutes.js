@@ -47,4 +47,18 @@ router.post('/create', isAuthenticated, async (req, res) => {
     }
 });
 
+//View note
+router.get('/note/:id', isAuthenticated, async (req, res) => {
+    try {
+        const noteId = req.params.id;
+        const selectedNote = await Note.findByPk(noteId);
+
+        res.render('partials/viewNote', {
+            note: selectedNote
+        });
+    } catch (error) {
+        console.log('Error while viewing note: ', error);
+    }
+});
+
 export default router;

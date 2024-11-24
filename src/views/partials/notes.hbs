@@ -38,8 +38,10 @@
               <div
                 class="p-6 border-t-4 border-black group-hover:border-white flex justify-end space-x-4"
               >
-                <button class="font-mono hover:underline">EDIT →</button>
-                <button class="font-mono hover:underline">DELETE →</button>
+                <a
+                  class="font-mono hover:underline"
+                  href="/note/{{note.dataValues.id}}"
+                >OPEN →</a>
               </div>
             </article>
           {{/each}}
