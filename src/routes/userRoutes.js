@@ -71,23 +71,35 @@ router.get('/login', (req, res) => {
 router.post('/verifyLogin', async (req, res) => {
     try {
         const { name, password } = req.body;
-        let errors = [];
+        let error;
 
         const user = await User.findOne({
             where: { name: name }
         });
 
-        if (password != user.password || !user) {
-            errors.push('User not found, please verify your credentials');
-        } else {
-            req.session.isAuthenticated = true;
-            req.session.user = {
-                id: user.id,
-                name: user.name
-            };
+        if (!user) {
+            error = 'User not found, please verify your credentials';
 
-            res.redirect('/notes')
+            return res.render('partials/login', {
+                error: error
+            });
         }
+
+        if (user.password !== password) {
+            error = 'Wrong credentials, please verify.';
+
+            return res.render('partials/login', {
+                error: error
+            });
+        }
+
+        req.session.isAuthenticated = true;
+        req.session.user = {
+            id: user.id,
+            name: user.name
+        };
+
+        return res.redirect('/notes');
 
     } catch (error) {
         console.log('Error in log in POST route:', error);
