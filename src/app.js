@@ -5,6 +5,7 @@ import miscRoutes from './routes/miscRoutes.js';
 import userRoutes from './routes/userRoutes.js';
 import noteRoutes from './routes/noteRoutes.js';
 import { engine } from 'express-handlebars';
+import methodOverride from 'method-override';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 import { sequelize } from './database.js';
@@ -39,6 +40,9 @@ app.use(session({
         maxAge: 1000 * 60 * 60 * 24 // = 24hs
     }
 }));
+
+//Method override
+app.use(methodOverride('_method'));
 
 //Routes setup
 app.use(miscRoutes, userRoutes, noteRoutes);

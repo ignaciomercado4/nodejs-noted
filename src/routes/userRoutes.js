@@ -96,14 +96,22 @@ router.post('/verifyLogin', async (req, res) => {
 
 
 //Log out
-router.get('/logout', isAuthenticated, async (req, res) => {
+router.get('/logout', isAuthenticated, (req, res) => {
     try {
         req.session.destroy((error) => {
-            console.log('Error while destroying session:', error);
+            if (error) {
+                console.error('Error while destroying session:', error);
+                return res.status(500).json({ error: 'Failed to logout' });
+            }
+
+            res.clearCookie('connect.sid');
+            res.redirect('/login');
         });
     } catch (error) {
-        console.log('Error while accessing log out route:', error);
+        console.error('Error while accessing log out route:', error);
+        res.status(500).json({ error: 'Failed to logout' });
     }
 });
+
 
 export default router;
