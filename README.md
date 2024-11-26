@@ -9,6 +9,14 @@ A simple, useful and modern notes app built with a brutalist design philosophy. 
 - 🎨 Brutalist UI design: Clean, functional, and distraction-free
 ---
 
+## UI
+![1noted](https://github.com/user-attachments/assets/1178ba46-4ee2-4770-81d0-12591789ea96)
+![5noted](https://github.com/user-attachments/assets/5e301660-d3a1-430b-8465-2bab6699eb37)
+![4noted](https://github.com/user-attachments/assets/4b780dce-a69d-4f71-a896-8cf41454ff62)
+![3noted](https://github.com/user-attachments/assets/5b54ead9-7f44-477a-85e4-b377728ea779)
+![2noted](https://github.com/user-attachments/assets/461ce101-c516-4939-8e45-47affc999ebf)
+---
+
 ## Tech Stack
 - Express.js - Backend framework
 - Node.js - Runtime environment
