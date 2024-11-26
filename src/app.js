@@ -6,14 +6,18 @@ import userRoutes from './routes/userRoutes.js';
 import noteRoutes from './routes/noteRoutes.js';
 import { engine } from 'express-handlebars';
 import methodOverride from 'method-override';
+import dotenv from 'dotenv';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 import { sequelize } from './database.js';
 import { User } from './models/User.js';
 
+//.env config
+dotenv.config();
+
 //Constants
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 //Rendering engine configuration

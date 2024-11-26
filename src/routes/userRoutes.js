@@ -1,18 +1,22 @@
-/*
-Here are the registration, sign in & sign out routes + authentication
- */
-
 import express from 'express';
 import { User } from '../models/User.js';
 import { validateRegistrationFormPassword, validateRegistrationFormName } from '../../public/js/validations.js';
 import { isAuthenticated } from '../../public/js/auth.js';
 import session from 'express-session';
+import bcrypt from 'bcrypt';
 
 const router = express.Router();
 
+const SALT_ROUNDS = parseInt(process.env.SALT_ROUNDS);
+
 //Registration
 router.get('/register', (req, res) => {
-    res.render('partials/registerForm');
+    try {
+        res.render('partials/registerForm');
+    } catch (error) {
+        console.log('Error while loading registration form:', error);
+        res.status(500).send('Internal Server Error');
+    }
 });
 
 router.post('/register', async (req, res) => {
@@ -21,25 +25,33 @@ router.post('/register', async (req, res) => {
         let errors = [];
 
         if (!validateRegistrationFormName(name)) {
-            errors.push("Your username can be 3-50 chars long and have only lowercase, uppercase letters and numbers, includind '-' or '_'.");
+            errors.push("Your username can be 3-50 chars long and have only lowercase, uppercase letters and numbers, including '-' or '_'.");
         }
 
         if (!validateRegistrationFormPassword(password)) {
-            errors.push("You password shoulf have a minimum of eight characters, at least one upper case English letter, one lower case English letter, one number and one special character.");
+            errors.push("Your password should have a minimum of eight characters, at least one upper case English letter, one lower case English letter, one number and one special character.");
         }
 
         if (errors.length === 0) {
-            await User.create({
+            const existingUser = await User.findOne({
+                where: { name: name }
+            });
+
+            if (existingUser) {
+                errors.push("Username already exists");
+                return res.render('partials/registerForm', {
+                    errors: errors
+                });
+            }
+
+            const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS);
+
+            const newUser = await User.create({
                 name: name,
-                password: password
+                password: hashedPassword
             });
 
-            const newUser = await User.findAll({
-                where: {
-                    name: name,
-                }
-            });
-
+            // Set up session
             req.session.isAuthenticated = true;
             req.session.user = {
                 id: newUser.id,
@@ -55,9 +67,12 @@ router.post('/register', async (req, res) => {
 
     } catch (error) {
         console.log('Error while creating a new User:', error);
+
+        res.render('partials/registerForm', {
+            errors: ["Username or password not meet the requirements!", "Your username can be 3-50 chars long and have only lowercase, uppercase letters and numbers, including '-' or '_'.", "Your password should have a minimum of eight characters, at least one upper case English letter, one lower case English letter, one number and one special character."]
+        });
     }
 });
-
 
 //Log in
 router.get('/login', (req, res) => {
@@ -65,31 +80,34 @@ router.get('/login', (req, res) => {
         res.render('partials/login');
     } catch (error) {
         console.log('Error while rendering login template:', error);
+        res.status(500).send('Internal Server Error');
     }
 });
 
 router.post('/verifyLogin', async (req, res) => {
     try {
         const { name, password } = req.body;
-        let error;
+        let errors = [];
 
         const user = await User.findOne({
             where: { name: name }
         });
 
         if (!user) {
-            error = 'User not found, please verify your credentials';
+            errors.push('User not found, please verify your credentials');
 
             return res.render('partials/login', {
-                error: error
+                errors: errors
             });
         }
 
-        if (user.password !== password) {
-            error = 'Wrong credentials, please verify.';
+        const isPasswordCorrect = await bcrypt.compare(password, user.password);
+
+        if (!isPasswordCorrect) {
+            errors.push('Wrong credentials, please verify.');
 
             return res.render('partials/login', {
-                error: error
+                error: errors
             });
         }
 
@@ -103,9 +121,11 @@ router.post('/verifyLogin', async (req, res) => {
 
     } catch (error) {
         console.log('Error in log in POST route:', error);
+        res.render('partials/login', {
+            errors: ["Unexpected error. Verify your credentials."]
+        });
     }
 });
-
 
 //Log out
 router.get('/logout', isAuthenticated, (req, res) => {
@@ -124,6 +144,5 @@ router.get('/logout', isAuthenticated, (req, res) => {
         res.status(500).json({ error: 'Failed to logout' });
     }
 });
-
 
 export default router;

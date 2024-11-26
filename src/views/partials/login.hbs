@@ -11,13 +11,15 @@
       class="text-6xl font-mono font-bold mb-8 border-b-8 border-black pb-4"
     >LOG IN.</h1>
 
-    {{#if error}}
-      <div class="border-4 border-black bg-red-100 p-4 mb-8">
-        <p class="font-mono text-xl text-black mb-2">
-          →
-          {{error}}
-        </p>
-      </div>
+    {{#if errors}}
+      {{#each errors as |error|}}
+        <div class="border-4 border-black bg-red-100 p-4 mb-8">
+          <p class="font-mono text-xl text-black mb-2">
+            →
+            {{error}}
+          </p>
+        </div>
+      {{/each}}
     {{/if}}
 
     <form action="/verifyLogin" method="POST" class="border-8 border-black p-8">
