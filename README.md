@@ -10,11 +10,12 @@ A simple, useful and modern notes app built with a brutalist design philosophy. 
 ---
 
 ## UI
-![1noted](https://github.com/user-attachments/assets/1178ba46-4ee2-4770-81d0-12591789ea96)
-![5noted](https://github.com/user-attachments/assets/5e301660-d3a1-430b-8465-2bab6699eb37)
-![4noted](https://github.com/user-attachments/assets/4b780dce-a69d-4f71-a896-8cf41454ff62)
-![3noted](https://github.com/user-attachments/assets/5b54ead9-7f44-477a-85e4-b377728ea779)
-![2noted](https://github.com/user-attachments/assets/461ce101-c516-4939-8e45-47affc999ebf)
+
+![1noted](https://github.com/user-attachments/assets/23c9add6-f112-488a-8790-4b4c361d1436)
+![2noted](https://github.com/user-attachments/assets/c0d44f88-47a7-41ff-8e07-6e2a113c6c2b)
+![3noted](https://github.com/user-attachments/assets/db795d10-c53d-4c97-add6-65d6f05b2cf8)
+![4noted](https://github.com/user-attachments/assets/0e48124b-b0fa-4479-8cf1-6f97f9e05394)
+![5noted](https://github.com/user-attachments/assets/7849d69c-643b-468b-8fe0-336dbcab86ce)
 ---
 
 ## Tech Stack
