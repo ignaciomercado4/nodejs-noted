@@ -42,7 +42,7 @@
         </button>
         <form
           id="deleteForm"
-          action="/notes/{{note.dataValues.id}}"
+          action="/note/delete/{{note.dataValues.id}}"
           method="POST"
           class="hidden"
         >
@@ -84,7 +84,11 @@
         </button>
       </div>
 
-      <form action="/note/{{note.dataValues.id}}" method="POST" class="p-6">
+      <form
+        action="/note/edit/{{note.dataValues.id}}"
+        method="POST"
+        class="p-6"
+      >
         <input type="hidden" name="_method" value="PUT" />
 
         <div class="mb-6">

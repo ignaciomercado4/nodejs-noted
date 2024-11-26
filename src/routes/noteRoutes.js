@@ -84,7 +84,7 @@ router.get('/note/:id', isAuthenticated, async (req, res) => {
 });
 
 //Edit
-router.post('/note/:id', isAuthenticated, async (req, res) => {
+router.post('/note/edit/:id', isAuthenticated, async (req, res) => {
     try {
         const noteId = parseInt(req.params.id);
 
@@ -121,7 +121,7 @@ router.post('/note/:id', isAuthenticated, async (req, res) => {
     }
 });
 
-router.post('/note/:id', isAuthenticated, async (req, res) => {
+router.post('/note/delete/:id', isAuthenticated, async (req, res) => {
     try {
         const noteId = parseInt(req.params.id);
 
